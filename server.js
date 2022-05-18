@@ -1,6 +1,6 @@
 const express = require('express'); //Express Import
-const redis = require('redis');
-const client = redis.createClient();
+const { createClient } = require('redis');
+const client = createClient();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const { response } = require('express');
@@ -22,8 +22,6 @@ app.post('/login',async (request,response)=>{//POSt is new information to the se
     console.log("Request Reieved");
     const loginRequest = request.body;
     var md5_pass = await client.hGet('password', loginRequest.userName);
-    console.log(loginRequest.userName);
-    console.log(md5_pass);
     //Search DB for username and get current Hash
     loginRequest.password = md5(loginRequest.password)
     if (loginRequest.password == md5_pass){
