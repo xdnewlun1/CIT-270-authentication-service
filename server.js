@@ -9,14 +9,21 @@ const app = express(); //Initialize the Library for Use
 
 client.on('error', (err) => console.log("Redis Client Error", err));
 
-client.connect();
 client.on('connect', function(){
     console.log('Conected!');
 });
 
 app.use(bodyParser.json());
 
-app.listen(PORT,()=>{console.log("Listening on Port: " + PORT)});
+app.listen(PORT,async ()=>{
+    console.log("Listening on Port: " + PORT)
+    await client.connect({
+        socket:{
+            port:6379,
+            host:"127.0.01"
+        }
+    });
+    });
 
 app.post('/login',async (request,response)=>{//POSt is new information to the server
     console.log("Request Reieved");
@@ -33,3 +40,17 @@ app.post('/login',async (request,response)=>{//POSt is new information to the se
     }
 })
 
+app.post('/register',async (request,response)=>{
+    console.log("Registration Recieved");
+    const regRequest = request.body;
+    var md5_pass = md5(regRequest.password);
+    var exists = await client.hExists("password", regRequest.userName);
+    if(exists){
+        response.status(409);
+        response.send("User Already Exists. Try Again!");
+    }else{
+        client.hSet("password", regRequest.userName, md5_pass);
+        response.status(201);
+        response.send("User" + regRequest.userName + " created!");
+    }
+})
