@@ -20,7 +20,7 @@ app.listen(PORT,async ()=>{
     await client.connect({
         socket:{
             port:6379,
-            host:"127.0.01"
+            host:"127.0.0.1"
         }
     });
     });
