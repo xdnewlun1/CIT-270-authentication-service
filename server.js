@@ -1,9 +1,12 @@
 const express = require('express'); //Express Import
+const https = require('https');
+const fs = require('fs');
 const { createClient } = require('redis');
 const client = createClient();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const { response } = require('express');
+const { fstat } = require('fs');
 const PORT = 3000;
 const app = express(); //Initialize the Library for Use
 
@@ -13,17 +16,24 @@ client.on('connect', function(){
     console.log('Conected!');
 });
 
-app.use(bodyParser.json());
-
-app.listen(PORT,async ()=>{
-    console.log("Listening on Port: " + PORT)
-    await client.connect({
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+    }, app).listen(PORT,async () => {
+        console.log("listening..");
+        await client.connect({
         socket:{
             port:6379,
             host:"127.0.0.1"
         }
     });
-    });
+})
+
+app.use(bodyParser.json());
+
+app.get("/", (request,response) => {
+    response.send("Hello!");
+})
 
 app.post('/login',async (request,response)=>{//POSt is new information to the server
     console.log("Request Reieved");
@@ -54,3 +64,4 @@ app.post('/register',async (request,response)=>{
         response.send("User" + regRequest.userName + " created!");
     }
 })
+
