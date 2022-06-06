@@ -1,11 +1,11 @@
 const express = require('express'); //Express Import
-const https = require('https');
-const fs = require('fs');
-const { createClient } = require('redis');
-const client = createClient();
-const bodyParser = require('body-parser');
-const md5 = require('md5');
-const PORT = 4043;
+const https = require('https'); //HTTPS Import
+const fs = require('fs'); //Import FileSystem Manipulation
+const { createClient } = require('redis'); //Import only the createClient object from redis
+const client = createClient(); //Create client
+const bodyParser = require('body-parser'); //Import body parser
+const md5 = require('md5'); //Import MD5 library
+const PORT = 4043; //Set PORT to 4043 for listening
 const app = express(); //Initialize the Library for Use
 
 client.on('error', (err) => console.log("Redis Client Error", err));
