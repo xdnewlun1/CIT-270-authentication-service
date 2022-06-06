@@ -5,8 +5,6 @@ const { createClient } = require('redis');
 const client = createClient();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
-const { response } = require('express');
-const { fstat } = require('fs');
 const PORT = 4043;
 const app = express(); //Initialize the Library for Use
 

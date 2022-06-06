@@ -1,2 +1,2 @@
-curl -d "@data.json" --insecure -H "Content-Type:application/json" -X POST https://localhost:3000/register
+curl -d "@data.json" -H "Content-Type:application/json" -X POST https://xander.cit270.com:4043/login
 pause
