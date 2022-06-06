@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const { response } = require('express');
 const { fstat } = require('fs');
-const PORT = 3000;
+const PORT = 4043;
 const app = express(); //Initialize the Library for Use
 
 client.on('error', (err) => console.log("Redis Client Error", err));
@@ -18,7 +18,8 @@ client.on('connect', function(){
 
 https.createServer({
     key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
+    cert: fs.readFileSync('server.cert'),
+    passphrase: 'P@ssw0rd'
     }, app).listen(PORT,async () => {
         console.log("listening..");
         await client.connect({
