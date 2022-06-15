@@ -1,8 +1,11 @@
 const express = require('express'); //Express Import
 const https = require('https'); //HTTPS Import
 const fs = require('fs'); //Import FileSystem Manipulation
-const { createClient } = require('redis'); //Import only the createClient object from redis
-const client = createClient(); //Create client
+//Import only the createClient object from redis
+const redis = require('redis');
+const client = redis.createClient({
+	url: 'redis://default:P31frf331vvlL@10.128.0.2:6379',
+}); //Create client
 const bodyParser = require('body-parser'); //Import body parser
 const md5 = require('md5'); //Import MD5 library
 const PORT = 4043; //Set PORT to 4043 for listening
@@ -20,13 +23,8 @@ https.createServer({
     passphrase: 'P@ssw0rd'
     }, app).listen(PORT,async () => {
         console.log("listening..");
-        await client.connect({
-        socket:{
-            port:6379,
-            host:"127.0.0.1"
-        }
-    });
-})
+        await client.connect();
+});
 
 app.use(bodyParser.json());
 
@@ -63,4 +61,3 @@ app.post('/register',async (request,response)=>{
         response.send("User" + regRequest.userName + " created!");
     }
 })
-
