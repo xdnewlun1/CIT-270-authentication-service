@@ -4,11 +4,11 @@ const fs = require('fs'); //Import FileSystem Manipulation
 //Import only the createClient object from redis
 const redis = require('redis');
 const client = redis.createClient({
-	url: 'redis://default:P31frf331vvlL@10.128.0.2:6379',
+	url: 'redis://default:P31frf331vvlL@xandernew.redis.cit270.com:6379',
 }); //Create client
 const bodyParser = require('body-parser'); //Import body parser
 const md5 = require('md5'); //Import MD5 library
-const PORT = 4043; //Set PORT to 4043 for listening
+const PORT = 443; //Set PORT to 4043 for listening
 const app = express(); //Initialize the Library for Use
 
 client.on('error', (err) => console.log("Redis Client Error", err));
