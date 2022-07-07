@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: cit270
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: cit270
+template:
+ metadata:
+  labels:
+   app: cit270
+spec:
+ containers:
+ - name: cit270
+   image: us-east1-doker.pkg.dev/cit-270-spring-352719/cit270/cit270-gke:latest
+   ports:
+   - containerPort: 443
+   env:
+    - name: PORT
+      value: "443"
