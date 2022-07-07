@@ -4,7 +4,7 @@ const fs = require('fs'); //Import FileSystem Manipulation
 //Import only the createClient object from redis
 const redis = require('redis');
 const client = redis.createClient({
-	url: 'redis://default:P31frf331vvlL@xandernew.redis.cit270.com:6379',
+	url: '',
 }); //Create client
 const bodyParser = require('body-parser'); //Import body parser
 const md5 = require('md5'); //Import MD5 library
